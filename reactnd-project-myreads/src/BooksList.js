@@ -18,7 +18,7 @@ class BooksList extends Component
 {
     render()
     {
-        const { bookList, shelf, classes, title } = this.props;
+        const { bookList, shelf, classes, title, onBooksShelfChange } = this.props;
         const currentShelfList = bookList.filter(item => item.shelf === shelf);
 
         return (
@@ -31,7 +31,7 @@ class BooksList extends Component
                     <GridList cellHeight={300} cols={3}>
                     {currentShelfList.map(item => (
                         <GridListTile key={item.id} cols={1}>
-                            <BooksCard book={item} />
+                            <BooksCard book={item}  onBooksShelfChange={(e, book, shelf) => onBooksShelfChange(e, book, shelf)} />
                         </GridListTile>
                     ))}
                     </GridList>

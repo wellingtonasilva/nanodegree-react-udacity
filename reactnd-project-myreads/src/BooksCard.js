@@ -34,6 +34,7 @@ class BooksCard extends Component
         this.state.book = props.book;
         this.state.shelf = props.book.shelf === undefined ? 'none' : props.book.shelf;
         this.state.selectedIndex = BooksShelf.filter(item => item.status === this.state.shelf)[0].index;
+        this.onBooksShelfChange = props.onBooksShelfChange;
     }
 
     state = {
@@ -51,9 +52,10 @@ class BooksCard extends Component
     handleMenuItemClick = (event, index) => {
         this.setState({
             anchorEl: null,
-            selectedIndex: index
+            selectedIndex: index,
+            shelf: BooksShelf[index].status
         });
-
+        this.onBooksShelfChange(event, this.state.book, this.state.shelf);
     }
 
     handleClose = () => {
@@ -100,6 +102,7 @@ class BooksCard extends Component
                     {BooksShelf.map((option,index) => (
                         <MenuItem
                             key={option.title}
+                            disabled={option.clickable === false}
                             selected={index === this.state.selectedIndex}
                             onClick={event => this.handleMenuItemClick(event, index)}
                         >

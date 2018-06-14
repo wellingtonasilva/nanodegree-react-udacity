@@ -32,6 +32,10 @@ const styles = theme => ({
             }));
         }
 
+        onBooksShelfChange = (e, book, shelf) => {
+            console.log(e, book, shelf);
+        }
+
         render()
         {
             const { classes } = this.props;
@@ -42,9 +46,10 @@ const styles = theme => ({
                     <Route exact path="/" render={() => (
                         <div>
                             { BooksShelf
-                                .filter(item => item.index < 3)
+                                .filter(item => item.canList)
                                 .map(item => (
-                            <BooksList key={item.index} bookList={bookList} shelf={item.status} title={item.title}/>
+                            <BooksList key={item.index} bookList={bookList} shelf={item.status}
+                                    title={item.title} onBooksShelfChange={this.onBooksShelfChange} />
                             ))}
                             <Link to="/search" id="book-search">
                                 <Button variant='fab' className={classes.fab} color='primary'>
