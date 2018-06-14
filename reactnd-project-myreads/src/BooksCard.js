@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { BooksShelf } from  './BooksUtils';
 
 const styles = theme => ({
     card: {
@@ -30,26 +27,13 @@ const styles = theme => ({
     }
 });
 
-const options = [
-    'currentlyReading',
-    'wantToRead',
-    'read',
-    'none'
-]
-
-const optionsTitle = [
-    'currently reading',
-    'want to read',
-    'read',
-    'None'
-]
-
 class BooksCard extends Component
 {
     constructor(props) {
         super(props);
         this.state.book = props.book;
-        this.state.selectedIndex = options.indexOf(props.book.shelf);
+        this.state.shelf = props.book.shelf === undefined ? 'none' : props.book.shelf;
+        this.state.selectedIndex = BooksShelf.filter(item => item.status === this.state.shelf)[0].index;
     }
 
     state = {
@@ -104,7 +88,8 @@ class BooksCard extends Component
                         }
                         subheader={book.subtitle}
                     />
-                    <img src={book.imageLinks.thumbnail} className={classes.media}/>
+                    <img src={book.imageLinks.thumbnail} className={classes.media}
+                        alt={book.title}/>
                 </Card>
                 <Menu
                     id='long-menu'
@@ -112,13 +97,13 @@ class BooksCard extends Component
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}
                 >
-                    {optionsTitle.map((option,index) => (
+                    {BooksShelf.map((option,index) => (
                         <MenuItem
-                        key={option}
-                        selected={index === this.state.selectedIndex}
-                        onClick={event => this.handleMenuItemClick(event, index)}
+                            key={option.title}
+                            selected={index === this.state.selectedIndex}
+                            onClick={event => this.handleMenuItemClick(event, index)}
                         >
-                            {option}
+                            {option.title}
                         </MenuItem>
                     ))}
                 </Menu>

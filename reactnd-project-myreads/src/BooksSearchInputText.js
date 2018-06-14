@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import BooksCard from './BooksCard';
-import * as BooksAPI from './BooksAPI';
 
 const styles = theme => ({
     root: theme.mixins.gutters({
@@ -18,7 +13,7 @@ class BooksSearch extends Component
 {
     render()
     {
-        const { classes, onSearchTextChange } = this.props;
+        const { onSearchTextChange } = this.props;
 
         return (
             <div>

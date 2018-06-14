@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import BooksList from './BooksList';
 import BooksSearch from './BooksSearch';
 import * as BooksAPI from './BooksAPI';
+import { BooksShelf } from './BooksUtils';
 
 const styles = theme => ({
         root: {
@@ -40,10 +41,11 @@ const styles = theme => ({
                 <div className={classes.root}>
                     <Route exact path="/" render={() => (
                         <div>
-                            <BooksList bookList={bookList} shelf={'currentlyReading'} title={'Currently Reading'}/>
-                            <BooksList bookList={bookList} shelf={'wantToRead'} title={'Want to read'}/>
-                            <BooksList bookList={bookList} shelf={'read'} title={'Read'}/>
-
+                            { BooksShelf
+                                .filter(item => item.index < 3)
+                                .map(item => (
+                            <BooksList key={item.index} bookList={bookList} shelf={item.status} title={item.title}/>
+                            ))}
                             <Link to="/search" id="book-search">
                                 <Button variant='fab' className={classes.fab} color='primary'>
                                     <AddIcon />

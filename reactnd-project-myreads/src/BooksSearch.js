@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import IconButton from '@material-ui/core/IconButton';
@@ -21,18 +20,26 @@ const styles = theme => ({
 
 class BooksSearch extends Component
 {
-    onSearchTextChange = (event) => {
+    state = {
+        books: []
+    }
+
+    onSearchTextChange = (event) =>
+    {
         event.preventDefault();
         const { value } = event.target;
+
         if (value && value.length > 2) {
-            console.log(value);
-            BooksAPI.search(event.target.value).then(res => console.log(res));
+            BooksAPI.search(event.target.value)
+                .then(res => this.setState({ books: res}))
+                .catch(error => this.setState({ books: []}));
         }
     }
 
     render()
     {
-        const { classes, onSearchTextChange } = this.props;
+        const { classes } = this.props;
+        const { books } = this.state;
 
         return (
             <div>
@@ -45,6 +52,14 @@ class BooksSearch extends Component
                     <Typography variant="headline" component="h3">
                     </Typography>
                     <BooksSearchInputText onSearchTextChange={this.onSearchTextChange} />
+
+                    <GridList cellHeight={300} cols={4}>
+                    {books &&  books.map(item => (
+                        <GridListTile key={item.id} cols={1}>
+                            <BooksCard book={item} />
+                        </GridListTile>
+                    ))}
+                    </GridList>
                 </Paper>
             </div>
         );
