@@ -53,9 +53,8 @@ class BooksCard extends Component
         this.setState({
             anchorEl: null,
             selectedIndex: index,
-            shelf: BooksShelf[index].status
         });
-        this.onBooksShelfChange(event, this.state.book, this.state.shelf);
+        this.onBooksShelfChange(event, this.state.book, BooksShelf[index].status);
     }
 
     handleClose = () => {

@@ -27,13 +27,18 @@ const styles = theme => ({
 
         componentDidMount()
         {
-            BooksAPI.getAll().then(res => this.setState({
-                bookList: res
-            }));
+            this.refresh();
         }
 
         onBooksShelfChange = (e, book, shelf) => {
-            console.log(e, book, shelf);
+            BooksAPI.update(book, shelf).then(res => this.refresh());
+        }
+
+        refresh = () =>
+        {
+            BooksAPI.getAll().then(res => this.setState({
+                bookList: res
+            }));
         }
 
         render()
@@ -59,7 +64,7 @@ const styles = theme => ({
                         </div>
                     )}/>
                     <Route path="/search" render={() => (
-                        <BooksSearch />
+                        <BooksSearch onBooksShelfChange={this.onBooksShelfChange} />
                     )}/>
             </div>
         );

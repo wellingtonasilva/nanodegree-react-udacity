@@ -38,7 +38,7 @@ class BooksSearch extends Component
 
     render()
     {
-        const { classes } = this.props;
+        const { classes, onBooksShelfChange} = this.props;
         const { books } = this.state;
 
         return (
@@ -56,7 +56,7 @@ class BooksSearch extends Component
                     <GridList cellHeight={300} cols={4}>
                     {books &&  books.map(item => (
                         <GridListTile key={item.id} cols={1}>
-                            <BooksCard book={item} />
+                            <BooksCard book={item} onBooksShelfChange={(e, book, shelf) => onBooksShelfChange(e, book, shelf)} />
                         </GridListTile>
                     ))}
                     </GridList>
