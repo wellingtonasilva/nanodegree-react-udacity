@@ -64,7 +64,7 @@ const styles = theme => ({
                         </div>
                     )}/>
                     <Route path="/search" render={() => (
-                        <BooksSearch onBooksShelfChange={this.onBooksShelfChange} />
+                        <BooksSearch onBooksShelfChange={this.onBooksShelfChange} myBookList={bookList}/>
                     )}/>
             </div>
         );

@@ -87,10 +87,14 @@ class BooksCard extends Component
                                 {book.title}
                             </Typography>
                         }
-                        subheader={book.subtitle}
+                        subheader={book.hasOwnProperty('authors') &&
+                            book.authors[0]
+                        }
                     />
+                    {book.hasOwnProperty('imageLinks') && book.imageLinks.hasOwnProperty('thumbnail') &&
                     <img src={book.imageLinks.thumbnail} className={classes.media}
                         alt={book.title}/>
+                    }
                 </Card>
                 <Menu
                     id='long-menu'

@@ -20,8 +20,14 @@ const styles = theme => ({
 
 class BooksSearch extends Component
 {
+    constructor(props){
+        super(props);
+        this.state.myBookList = props.myBookList;
+    }
+
     state = {
-        books: []
+        books: [],
+        myBookList: []
     }
 
     onSearchTextChange = (event) =>
@@ -33,6 +39,16 @@ class BooksSearch extends Component
             BooksAPI.search(event.target.value)
                 .then(res => this.setState({ books: res}))
                 .catch(error => this.setState({ books: []}));
+        }
+    }
+
+    getBook = (book) => {
+        const found = this.state.myBookList.filter(item => book.id === item.id);
+        if (found.length > 0) {
+            book.shelf = found[0].shelf;
+            return book;
+        } else {
+            return book;
         }
     }
 
@@ -56,7 +72,7 @@ class BooksSearch extends Component
                     <GridList cellHeight={300} cols={4}>
                     {books &&  books.map(item => (
                         <GridListTile key={item.id} cols={1}>
-                            <BooksCard book={item} onBooksShelfChange={(e, book, shelf) => onBooksShelfChange(e, book, shelf)} />
+                            <BooksCard book={this.getBook(item)} onBooksShelfChange={(e, book, shelf) => onBooksShelfChange(e, book, shelf)} />
                         </GridListTile>
                     ))}
                     </GridList>
