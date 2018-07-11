@@ -29,13 +29,11 @@ class App extends Component {
             id: this.state.zonaUrbanas.length + 1,
             descricao: this.input.value
         };
-        console.log(zonaUrbana);
         this.props.store.dispatch(createZonaUrbana(zonaUrbana));
     }
 
   render() {
       const { zonaUrbanas } = this.state;
-      console.log(zonaUrbanas);
     return (
       <div className="App">
         <input type='text' ref={(input) => this.input = input}></input>

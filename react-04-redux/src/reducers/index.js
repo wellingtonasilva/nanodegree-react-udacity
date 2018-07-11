@@ -5,11 +5,7 @@ export default function reducerZonaUrbana(state = [{id: 0, descricao: 'Nao defin
         case LOAD_ZONA_URBANA:
             return action.list;
         case CREATE_ZONA_URBANA:
-            console.log(state);
-            console.log(action.zonaUrbana);
-             state.push(action.zonaUrbana);
-            return state;
-
+            return [...state, action.zonaUrbana];
         default:
             return state;
     }
