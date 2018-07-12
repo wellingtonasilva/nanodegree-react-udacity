@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { connect  } from 'react-redux';
-import { loadZonaUrbana, createZonaUrbana, loadServicoTipo } from './actions';
-import { bindActionCreators } from 'redux'
+import { loadZonaUrbana, createZonaUrbana } from './actions';
 
 class App extends Component {
-    state = {
-        zonaUrbanas: [],
-    }
-
-    componentDidMount() {
-    }
 
     createNew = () => {
         const zonaUrbana = {
             id: 1,
             descricao: this.input.value
         }
-        this.props.createZonaUrbana(zonaUrbana);
+        this.props.createZonaUrbana(zonaUrbana)
     };
 
     render() {
         const { zonaUrbanas } = this.props;
-        console.log("render", zonaUrbanas);
+        console.log(zonaUrbanas)
 
         return (
             <div className="App">
                 <input type='text' ref={(input) => this.input = input}></input>
                 <button onClick={this.createNew}>Create New</button>
                 <ul>
-            {zonaUrbanas && zonaUrbanas.map(item => (
-                <li key={item.id}>{item.descricao}</li>
-            ))}
+                    {zonaUrbanas && zonaUrbanas.map(item => (
+                        <li key={item.id}>{item.descricao}</li>
+                    ))}
                 </ul>
             </div>
         );
@@ -45,11 +37,12 @@ const nomes = [
     {nome: 'Silva'}
 ];
 
-function mapStateToProps({zonaUrbanas, servicoTipos}) {
+function mapStateToProps(state) {
+    console.log(state)
     return {
-        zonaUrbanas: zonaUrbanas,
         nomes: nomes,
-        servicoTipos: servicoTipos
+        zonaUrbanas: state.reducerZonaUrbana,
+        servicoTipos: state.reducerServicoTipo
     }
 }
 
