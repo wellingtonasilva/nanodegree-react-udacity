@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux'
 class App extends Component {
     state = {
         zonaUrbanas: [],
-        store: new Object()
     }
 
     componentDidMount() {
@@ -19,9 +18,7 @@ class App extends Component {
             id: 1,
             descricao: this.input.value
         }
-        this.props.createZonaUrbana(zonaUrbana).subscribe(() => {
-            console.log("oiiii");
-        });
+        this.props.createZonaUrbana(zonaUrbana);
     };
 
     render() {
